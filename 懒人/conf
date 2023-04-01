@@ -1,0 +1,126 @@
+[General]
+# 跳过某个域名或者IP段
+bypass-tun = 192.168.0.0/16,localhost,*.local10.0.0.0/8,127.0.0.0/8,169.254.0.0/16,192.0.2.0/24,198.51.100.0/24,224.0.0.0/4
+skip-proxy = 192.168.0.0/16,10.0.0.0/8,127.0.0.0/8,169.254.0.0/16,192.0.2.0/24,198.51.100.0/24,224.0.0.0/4,*.local,localhostlocal
+# DNS服务器
+dns-server = system,223.5.5.5,119.29.29.29
+# 加密DNS服务器
+doh-server =https://doh.pub/dns-query
+# ipv6
+ipv6 = false
+# udp
+allow-udp-proxy = true
+# 是否开启局域网代理访问
+allow-wifi-access = false
+wifi-access-http-port = 8899
+wifi-access-socks5-port = 8898
+# 代理测速
+proxy-test-url = http://cp.cloudflare.com/generate_204
+# 测试超时秒速
+test-timeout = 3
+# 一个节点连接失败几次后会进行节点切换，默认3次
+switch-node-after-failure-times = 1
+# 订阅资源解析器链接
+resource-parser = https://raw.githubusercontent.com/Peng-YM/Sub-Store/master/backend/dist/sub-store-parser.loon.min.js
+# ssid策略
+# ssid-trigger = "loon-wifi5g":DIRECT,"cellular":PROXY,"default":RULE
+# real-ip
+real-ip = *.apple.com,*.icloud.com
+# 指定流量使用哪个网络接口进行转发，目前包含三种模式:
+interface-mode = Auto
+# :8080，表示解析所有8080端口，0表示解析所有端口
+# 通配符域名，解析所有端口下的相关域名
+force-http-engine-hosts = *.baid.com,:8080
+# 禁用udp协议的一些端口
+disable-udp-ports = 443,80
+# 禁用stun是否禁用stun协议的udp数据，禁用后可以有效解决webrtc的ip泄露
+disable-stun = true
+[Host]
+
+host = 127.0.0.1
+
+# 切换至路由器 DNS 服务 （修改下方 LEDE 为自己 Wi-Fi ID）
+ssid:LEDE = server:system
+
+# 本地节点
+[Proxy]
+WARP = WireGuard,interface-ip=172.16.0.2,interface-ipv6=2606:4700:110:80b9:9ede:dae3:57f4:aab0,private-key="gAcYHIby52wHIjzDGNSjidMKuuNJS4jtlBC6JuGOC2A=",mtu=1400,dns=162.159.36.1,dnsv6=2606:4700:4700::1111,keepalive=45,peers=[{public-key="bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=",allowed-ips="0.0.0.0/0,::/0",endpoint=162.159.195.9:908,reserved=[57,229,128]}]
+
+# 订阅节点
+[Remote Proxy]
+
+# 节点筛选
+[Remote Filter]
+
+订阅节点 = NameRegex, FilterKey = "^(?!.*(流量|测试|使用|更新|游戏)).*$"
+手动筛选 = NameRegex, FilterKey = "(.*)"
+香港节点 = NameRegex, FilterKey = "香港|HK|HongKong|Hong Kong"
+台湾节点 = NameRegex, FilterKey = "台湾|TW|Tai"
+日本节点 = NameRegex, FilterKey = "日本|JP|Japan"
+美国节点 = NameRegex, FilterKey = "美国|US|United States"
+狮城节点 = NameRegex, FilterKey = "新加坡|狮城|SG|Singapore"
+网飞节点 = NameRegex, FilterKey = "网飞|奈飞|解锁|NF|Netflix"
+
+# 策略组
+[Proxy Group]
+哔哩哔哩 = select,DIRECT,香港节点,台湾节点,img-url = https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/BiliBili.png
+Telegram = select,WARP,香港节点,台湾节点,日本节点,新加坡节点,美国节点,img-url = https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Social_Media/Telegram.png
+YouTube = select,香港节点,台湾节点,日本节点,新加坡节点,美国节点,img-url = https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Social_Media/YouTube.png
+奈飞 = select,香港节点,台湾节点,日本节点,新加坡节点,美国节点,其他地区,img-url = https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/Netflix.png
+Speedtest = select,WARP,香港节点,台湾节点,日本节点,新加坡节点,美国节点,img-url = https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/Speedtest.png
+Proxy = select,WARP,香港节点,台湾节点,日本节点,新加坡节点,美国节点,img-url = https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/Streaming.png
+香港节点 = fallback,香港,url = http://cp.cloudflare.com/generate_204,interval = 600,max-timeout = 3000,img-url = https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Rounded_Rectangle/Hong_Kong.png
+台湾节点 = fallback,台湾,url = http://cp.cloudflare.com/generate_204,interval = 600,max-timeout = 3000,img-url = https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Rounded_Rectangle/Taiwan.png
+日本节点 = fallback,日本,url = http://cp.cloudflare.com/generate_204,interval = 600,max-timeout = 3000,img-url = https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Rounded_Rectangle/Japan.png
+新加坡节点 = fallback,狮城,url = http://cp.cloudflare.com/generate_204,interval = 600,max-timeout = 3000,img-url = https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Rounded_Rectangle/Singapore.png
+美国节点 = select,美国,img-url = https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Rounded_Rectangle/United_States.png
+其他地区 = select,其他节点,img-url = https://raw.githubusercontent.com/tugepaopao/Image-Storage/master/cartoon/Cute1/1685567.png
+
+# 本地规则
+[Rule]
+
+# > GeoIP China
+#GEOIP,CN,DIRECT
+FINAL,Proxy 
+
+# 订阅规则
+[Remote Rule]
+https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/Guard/Advertising.list, policy=REJECT, tag=AD, enabled=true
+https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/Guard/Privacy.list, policy=REJECT, tag=隐私, enabled=true
+https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/Guard/Hijacking.list, policy=REJECT, tag=运营劫持, enabled=true
+https://raw.githubusercontent.com/ExaAlice/Alice/main/Rule/WARP.list, policy=WARP, tag=WARP, enabled=true
+# openai分流
+https://gitlab.com/lodepuly/vpn_tool/-/raw/main/Tool/Loon/Rule/OpenAI.list, policy=WARP, tag=openai, enabled=true
+https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/StreamingMedia/Video/Netflix.list, policy=奈飞, tag=奈飞, enabled=true
+https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/StreamingMedia/Video/YouTube.list, policy=YouTube, tag=YouTube, enabled=true
+https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/StreamingMedia/Streaming.list, policy=Proxy, tag=国际流媒体, enabled=true
+https://raw.githubusercontent.com/NobyDa/Script/master/Surge/Bilibili.list, policy=哔哩哔哩, tag=bilibili, enabled=true
+https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/StreamingMedia/StreamingSE.list, policy=DIRECT, tag=国内流媒体, enabled=true
+https://raw.githubusercontent.com/VirgilClyne/GetSomeFries/main/ruleset/ASN.Telegram.list, policy=Telegram, tag=Telegram, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/AppleProxy/AppleProxy.list, policy=Proxy, tag=Apple Proxy, enabled=true
+https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/Global.list, policy=Proxy, tag=Global, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Global/Global_Domain.list, policy=Proxy, tag=Global  D, enabled=true
+# > Proxy
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Loon/Proxy/Proxy.list, policy=Proxy, tag=Proxy, enabled=true
+https://raw.githubusercontent.com/DivineEngine/Profiles/master/Surge/Ruleset/Extra/Apple/Apple.list, policy=DIRECT, tag=Apple, enabled=true
+https://raw.githubusercontent.com/blackmatrix7/ios_rule_script/master/rule/Surge/Speedtest/Speedtest.list, policy=Speedtest, tag=speedtest, enabled=true
+https://raw.githubusercontent.com/NobyDa/Script/master/Surge/WeChat.list, policy=DIRECT, tag=Wechat, enabled=true
+https://raw.githubusercontent.com/HoCooo/Loon/main/ChinaASN.list, policy=DIRECT, tag=ASN, enabled=true
+
+# 订阅重写
+[Remote Rewrite]
+
+# 插件
+[Plugin]
+# TG群里自己找需要的插件，发关键词便有，群组链接🔗 https://t.me/Loon0x00
+
+# 本地脚本
+[Script]
+
+# 远程脚本 
+[Remote Script]
+
+[MITM]
+# 默认 = 启用
+hostname =
+skip-server-cert-verify = true
